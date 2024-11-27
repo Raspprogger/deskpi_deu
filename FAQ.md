@@ -1,44 +1,46 @@
 # FAQ 
-## About USB booting, what is UASP?
-* Without UASP, a drive is mounted as a Mass Storage Device using Bulk Only Transport (or BOT), a protocol that was designed for transferring files way back in the USB 'Full speed' days, when the fastest speed you could get was a whopping 12 Mbps!
-* With USB 3.0, the BOT protocol cripples throughput. USB 3.0 has 5 Gbps of bandwidth, which is 400x more than USB 1.1. The old BOT protocol would transfer data in large chunks, and each chunk of data had to be delivered in order, without regard for buffering or multiple bits of data being able to transfer in parallel.
-* So a new protocol was created, called 'USB Attached SCSI Protocol', or 'UASP'
+## Über USB-Boot, was ist UASP?
+* Ohne UASP wird ein Laufwerk als Massenspeichergerät mit Bulk Only Transport (oder BOT) eingebunden, einem Protokoll, das für die Datenübertragung in den Tagen von USB "Full Speed" entwickelt wurde, als die maximale Geschwindigkeit nur 12 Mbps betrug!
+* Mit USB 3.0 begrenzt das BOT-Protokoll den Datendurchsatz erheblich. USB 3.0 bietet 5 Gbps Bandbreite, was 400-mal mehr ist als bei USB 1.1. Das alte BOT-Protokoll übertrug Daten in großen Blöcken, wobei jeder Block der Reihe nach übertragen werden musste, ohne Berücksichtigung von Pufferung oder paralleler Datenübertragung.
+* Daher wurde ein neues Protokoll entwickelt, das 'USB Attached SCSI Protocol' oder kurz 'UASP' genannt wird.
  
-## How to check if my drive is support UASP?
-* If you have a USB drive and don't want to take it apart and look up the specs of the controller chip, the only reliable way to tell if it's being mounted with UASP support or not is to plug it into your Pi, then run the command lsusb -t:
+## Wie kann ich überprüfen, ob mein Laufwerk UASP unterstützt?
+* Wenn Sie ein USB-Laufwerk haben und es nicht auseinanderbauen möchten, um die Spezifikationen des Controller-Chips nachzuschlagen, können Sie nur durch den folgenden Befehl feststellen, ob es mit UASP-Unterstützung eingebunden wird oder nicht. Schließen Sie das Laufwerk an Ihren Pi an und führen Sie den Befehl `lsusb -t` aus:
 ```bash
 $ lsusb -t
 /:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 5000M
     |__ Port 1: Dev 2, If 0, Class=Mass Storage, Driver=uas, 5000M
 ```
-This command lists all the USB devices in a tree, and for each of the hard drives, you should see a Driver listed. If it's uas (like in the above example), then your drive supports UASP and you'll get the best speed. If it's usb-storage, then it's using the older BOT protocol and you won't see the full potential.
-## Why my fan dose not spinning around when it idled for a while? 
-* By default, deskPi's fan driver adjusts the speed according to the currently read CPU temperature. If the current temperature is lower than the fan rotation threshold, the fan will automatically stop. If you need the fan to run at a specific speed, please turn it on A terminal and execute the `deskpi-config` command and select the corresponding operating mode according to the prompt.
+Dieser Befehl listet alle USB-Geräte in einer Baumstruktur auf, und für jedes Laufwerk wird ein Treiber angegeben. Wenn dort `uas` (wie im obigen Beispiel) steht, unterstützt Ihr Laufwerk UASP und Sie erhalten die beste Geschwindigkeit. Wenn dort `usb-storage` steht, verwendet es das ältere BOT-Protokoll und Sie werden nicht das volle Potenzial sehen.
 
-## What is pre-installed Raspbian OS's username and password? 
-* Pre-install Raspbian OS's username is `pi` and password is `raspberry`, it is original of Raspiban, we did not change it when we distribute this image.
+## Warum dreht sich mein Lüfter nicht, wenn das System im Leerlauf ist? 
+* Standardmäßig passt der Lüftertreiber von DeskPi die Geschwindigkeit entsprechend der aktuellen CPU-Temperatur an. Wenn die aktuelle Temperatur unter der Lüfterrotation-Schwelle liegt, stoppt der Lüfter automatisch. Wenn Sie möchten, dass der Lüfter mit einer bestimmten Geschwindigkeit läuft, öffnen Sie ein Terminal und führen Sie den Befehl `deskpi-config` aus. Wählen Sie den entsprechenden Betriebsmodus gemäß den Anweisungen.
 
-## Why dose this pre-installed Raspbian OS image's setting is China? 
-* This pre-installed Raspbian OS image is based on Raspbian OS buster(ver:2020-08-20), and when we are initializing this OS and try to connect to internet and download deskpi driver from github.com, we must set the wi-fi country before we enable the wifi adapters. and this product may sale all around the world, we can not detect which country or nation that our costomer is in, so the default set is Shanghai China. and you can just change the wi-fi country by using command in terminal : `sudo raspi-config` and select Localisation Options to configure language and regional settings.
+## Wie lauten Benutzername und das Passwort des vorinstallierten Raspbian OS?
+* Der Benutzername des vorinstallierten Raspbian OS ist `pi` und das Passwort ist `raspberry`. Diese Daten sind die Originalwerte von Raspbian; wir haben sie nicht verändert, als wir das Image verteilt haben.
 
-## The front panel USB is unavailable.
-* Because there is no configuration: /boot/config.txt file, you need to add in this configuration file: dtoverlay=dwc2,dr_mode=host, and restart the Raspberry Pi. and if you installed deskPi driver, it will add to config.txt file automatically. 
+## Warum sind die Einstellungen dieses vorinstallierten Raspbian-OS-Images auf China voreingestellt?
+* Dieses vorinstallierte Raspbian-OS-Image basiert auf Raspbian OS Buster (Version: 2020-08-20). Beim Initialisieren des OS und dem Versuch, eine Verbindung zum Internet herzustellen, um den DeskPi-Treiber von github.com herunterzuladen, müssen wir das Wi-Fi-Land vor dem Aktivieren der Wi-Fi-Adapter einstellen. Da dieses Produkt weltweit verkauft wird, können wir nicht erkennen, in welchem Land oder welcher Region sich unser Kunde befindet. Daher ist die Standardeinstellung Shanghai, China. Sie können das Wi-Fi-Land jedoch ganz einfach ändern, indem Sie den folgenden Befehl im Terminal ausführen: `sudo raspi-config` und dann die Lokalisierungsoptionen auswählen, um Sprache und Region zu konfigurieren.
 
-## Can I change computer name in pre-installed Raspbian OS?
-* Yes, of course, Typing `sudo raspi-config` to select System Options (item 1) and navigate to S4 Hostname to configure your hostname or just typing `sudo hostnamectl set-hostname YOURHOSTNAMEHERE` to set hostname in commandline.
+## Der USB-Anschluss auf der Frontplatte funktioniert nicht.
+* Dies liegt daran, dass in der Datei `/boot/config.txt` keine Konfiguration vorhanden ist. Sie müssen die folgende Konfiguration zu dieser Datei hinzufügen: `dtoverlay=dwc2,dr_mode=host` und den Raspberry Pi neu starten. Wenn Sie den DeskPi-Treiber installiert haben, wird diese Konfiguration automatisch hinzugefügt.
 
-## How can i check if my drive is support UASP?
-* Open a terminal and typing: `lsusb -t |grep -i "uas"` and press Enter.
+## Kann ich den Computernamen im vorinstallierten Raspbian OS ändern?
+* Ja, natürlich. Geben Sie `sudo raspi-config` ein, wählen Sie Systemoptionen (Punkt 1) und navigieren Sie zu `S4 Hostname`, um den Hostnamen zu konfigurieren. Alternativ können Sie den Befehl `sudo hostnamectl set-hostname IHRHOSTNAMEHIER` verwenden, um den Hostnamen über die Befehlszeile einzustellen.
 
-## How to install deskpi fan control driver when i've reflashed my TF card? 
-* Make sure your OS is on the support OS list.
-* Make sure your Raspberry Pi can access internet.
-* git clone https://github.com/DeskPi-Team/deskpi.git
-* Typing following command in a terminal:
+## Wie kann ich überprüfen, ob mein Laufwerk UASP unterstützt?
+* Öffnen Sie ein Terminal und geben Sie den Befehl ein: `lsusb -t |grep -i "uas"` und drücken Sie Enter.
+
+## Wie installiere ich den DeskPi-Lüftertreiber, nachdem ich meine TF-Karte neu geflasht habe?
+* Stellen Sie sicher, dass Ihr Betriebssystem auf der Liste der unterstützten Betriebssysteme steht.
+* Stellen Sie sicher, dass Ihr Raspberry Pi Zugriff auf das Internet hat.
+* Klonen Sie das Repository mit: `git clone https://github.com/DeskPi-Team/deskpi.git`
+* Geben Sie die folgenden Befehle in ein Terminal ein:
 ```bash
 cd ~/deskpi/
 chmod +x install.sh
 sudo ./install.sh
 ```
-## Where is the list of supported OS ?
-* Please just visit here: https://github.com/DeskPi-Team/deskpi
+
+## Wo finde ich die Liste der unterstützten Betriebssysteme ?
+* Besuchen Sie einfach: https://github.com/DeskPi-Team/deskpi
