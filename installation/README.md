@@ -1,12 +1,16 @@
-# NOTE:
-## About OS Selection
-Please select the correct operating system and platform architecture for installation.
+# HINWEIS:
+## Zur Auswahl des Betriebssystems
+Bitte wählen Sie das richtige Betriebssystem und die Plattformarchitektur für die Installation aus.
 
-> Support for 32-bit systems has been discontinued; Use a 64-bit system to fully leverage the performance of the Raspberry Pi. 
+> **Hinweis:** Die Unterstützung für 32-Bit-Systeme wurde eingestellt; Verwenden Sie ein 64-Bit-System, um die Leistung des Raspberry Pi voll auszuschöpfen.
 
-> Additionally, due to the official operating system of the Raspberry Pi providing hardware-based optimizations for the Raspberry Pi, it is strongly recommended to use Raspberry Pi OS. 
+> Außerdem wird aufgrund der hardwarebasierten Optimierungen des offiziellen Betriebssystems für den Raspberry Pi dringend empfohlen, das Raspberry Pi OS zu verwenden.
 
-## The Current file structure is as follows:
+---
+
+## Die aktuelle Verzeichnisstruktur ist wie folgt:
+
+```plaintext
 .
 ├── deskpi-config
 ├── DietPi
@@ -44,7 +48,34 @@ Please select the correct operating system and platform architecture for install
 │   ├── install-ubuntu-64.sh
 │   └── uninstall-ubuntu-mate.sh
 └── uninstall.sh
-## Get Support 
-If you have any trouble on using our product,please kindly send E-mail to: support@deskpi.com
+```
+
+---
+
+## Skripte ausführen
+
+### So führen Sie die Installations- und Deinstallationsskripte aus:
+
+1. Öffnen Sie ein Terminal.
+2. Navigieren Sie in das Verzeichnis, in dem sich das gewünschte Skript befindet.
+3. Machen Sie das Skript ausführbar (falls dies nicht bereits der Fall ist):
+
+    ```bash
+    chmod +x install-<OS>-64bit.sh
+    ```
+
+4. Führen Sie das Skript aus:
+
+    ```bash
+    ./install-<OS>-64bit.sh
+    ```
+
+Ersetzen Sie `<OS>` durch den Namen des Betriebssystems, das Sie installieren möchten (z. B. `dietPi`, `fedora`, `ubuntu`, etc.).
+
+---
+
+## Unterstützung erhalten
+Falls Sie Probleme bei der Nutzung unseres Produkts haben, senden Sie bitte eine E-Mail an: [support@deskpi.com](mailto:support@deskpi.com)
+
 
 
